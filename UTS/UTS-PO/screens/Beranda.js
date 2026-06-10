@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import FormPesanan from "../components/FormPesanan";
 
-export default function Beranda({ tambahPesanan }) {
+export default function Beranda({ tambahPesanan, products }) {
   return (
     <View style={{ flex: 1, padding: 20 }}>
       <Text
@@ -20,7 +20,7 @@ export default function Beranda({ tambahPesanan }) {
         Input Pre-Order
       </Text>
 
-      <FormPesanan onTambah={tambahPesanan} />
+      <FormPesanan onTambah={tambahPesanan} products={products} />
     </View>
   );
 }
