@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function ItemPesanan({ item, onHapus }) {
+export default function ItemPesanan({ item, onHapus, colors }) {
   const isPO =
     item.isPO === true ||
     item.po === true ||
@@ -15,34 +15,52 @@ export default function ItemPesanan({ item, onHapus }) {
     : item.total || 0;
 
   return (
-    <View style={[styles.card, isPO && styles.cardPO]}>
-      <Text style={styles.title}>{item.customer}</Text>
+    <View
+      style={[
+        styles.card,
+        { backgroundColor: colors.surface, borderColor: colors.border },
+        isPO && styles.cardPO,
+      ]}
+    >
+      <Text style={[styles.title, { color: colors.text }]}>
+        {item.customer}
+      </Text>
       {itemList ? (
         <View>
           {itemList.map((it, idx) => (
-            <Text key={idx}>
+            <Text key={idx} style={{ color: colors.text }}>
               {it.produk} x{it.jumlah} — Rp {it.total}
             </Text>
           ))}
-          <Text style={{ marginTop: 6, fontWeight: "bold" }}>
+          <Text
+            style={{ marginTop: 6, fontWeight: "bold", color: colors.text }}
+          >
             Total: Rp {totalFromItems}
           </Text>
         </View>
       ) : (
         <View>
-          {legacyProduct && <Text>{legacyProduct}</Text>}
-          {item.jumlah !== undefined && <Text>Jumlah: {item.jumlah}</Text>}
-          <Text>Total: Rp {item.total || item.price || 0}</Text>
+          {legacyProduct && (
+            <Text style={{ color: colors.text }}>{legacyProduct}</Text>
+          )}
+          {item.jumlah !== undefined && (
+            <Text style={{ color: colors.text }}>Jumlah: {item.jumlah}</Text>
+          )}
+          <Text style={{ color: colors.text }}>
+            Total: Rp {item.total || item.price || 0}
+          </Text>
         </View>
       )}
 
       {item.date && (
-        <Text style={styles.dateText}>Tanggal ambil: {item.date}</Text>
+        <Text style={[styles.dateText, { color: colors.muted }]}>
+          Tanggal ambil: {item.date}
+        </Text>
       )}
 
       <Text
         style={{
-          color: item.status === "Selesai" ? "green" : "red",
+          color: item.status === "Selesai" ? "#22c55e" : "#ef4444",
           marginTop: 6,
         }}
       >
@@ -62,14 +80,11 @@ const styles = StyleSheet.create({
   card: {
     padding: 20,
     paddingBottom: 25,
-    backgroundColor: "#eee",
+    borderWidth: 1,
     marginVertical: 8,
     borderRadius: 5,
-    gap: 9,
   },
-  cardPO: {
-    backgroundColor: "#c0e0e7",
-  },
+  cardPO: {},
   title: {
     fontWeight: "bold",
     fontSize: 17,
@@ -85,11 +100,9 @@ const styles = StyleSheet.create({
   },
   hapusButtonText: {
     color: "#fff",
-    fontWeight: "bold",
   },
   dateText: {
     marginTop: 8,
-    color: "#4b6570",
     fontSize: 13,
   },
 });

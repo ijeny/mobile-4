@@ -10,7 +10,7 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 
-export default function FormPesanan({ onTambah, products = [] }) {
+export default function FormPesanan({ onTambah, products = [], colors }) {
   const [nama, setNama] = useState("");
   const [produk, setProduk] = useState("");
   const [jumlah, setJumlah] = useState("");
@@ -111,17 +111,32 @@ export default function FormPesanan({ onTambah, products = [] }) {
       : 0;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <TextInput
         placeholder="Nama Customer"
-        style={styles.input}
+        placeholderTextColor={colors.muted}
+        style={[
+          styles.input,
+          {
+            backgroundColor: colors.surface,
+            borderColor: colors.border,
+            color: colors.text,
+          },
+        ]}
         value={nama}
         onChangeText={setNama}
       />
 
       <Picker
         selectedValue={produk}
-        style={styles.picker}
+        style={[
+          styles.picker,
+          {
+            backgroundColor: colors.surface,
+            borderColor: colors.border,
+            color: colors.text,
+          },
+        ]}
         onValueChange={setProduk}
       >
         <Picker.Item label="Pilih Produk" value="" />
@@ -136,15 +151,33 @@ export default function FormPesanan({ onTambah, products = [] }) {
 
       <TextInput
         placeholder="Jumlah"
-        style={styles.input}
+        placeholderTextColor={colors.muted}
+        style={[
+          styles.input,
+          {
+            backgroundColor: colors.surface,
+            borderColor: colors.border,
+            color: colors.text,
+          },
+        ]}
         value={jumlah}
         onChangeText={setJumlah}
         keyboardType="numeric"
       />
 
-      <TouchableOpacity style={styles.dateField} onPress={bukaTanggal}>
-        <Text style={styles.dateLabel}>Tanggal ambil pesanan</Text>
-        <Text style={styles.dateValue}>{formatTanggal(tanggal)}</Text>
+      <TouchableOpacity
+        style={[
+          styles.dateField,
+          { backgroundColor: colors.surface, borderColor: colors.border },
+        ]}
+        onPress={bukaTanggal}
+      >
+        <Text style={[styles.dateLabel, { color: colors.muted }]}>
+          Tanggal ambil pesanan
+        </Text>
+        <Text style={[styles.dateValue, { color: colors.text }]}>
+          {formatTanggal(tanggal)}
+        </Text>
       </TouchableOpacity>
 
       {showDatePicker && (
@@ -156,26 +189,34 @@ export default function FormPesanan({ onTambah, products = [] }) {
         />
       )}
 
-      <Text style={{ marginTop: 10, fontWeight: "bold" }}>
+      <Text style={{ marginTop: 10, fontWeight: "bold", color: colors.text }}>
         Subtotal: Rp {subtotal}
       </Text>
 
       {items.length > 0 && (
         <View style={{ marginTop: 8 }}>
           {items.map((it, i) => (
-            <Text key={i}>
+            <Text key={i} style={{ color: colors.text }}>
               {it.produk} x{it.jumlah} - Rp {it.total}
             </Text>
           ))}
         </View>
       )}
 
-      <Text style={{ marginTop: 10 }}>Item sekarang: Rp {currentTotal}</Text>
+      <Text style={{ marginTop: 10, color: colors.text }}>
+        Item sekarang: Rp {currentTotal}
+      </Text>
 
-      <TouchableOpacity style={styles.buttonSmall} onPress={tambahItem}>
+      <TouchableOpacity
+        style={[styles.buttonSmall, { backgroundColor: colors.secondary }]}
+        onPress={tambahItem}
+      >
         <Text style={styles.buttonText}>Tambah Pesanan</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleTambah}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: colors.primary }]}
+        onPress={handleTambah}
+      >
         <Text style={styles.buttonText}>Konfirmasi</Text>
       </TouchableOpacity>
     </View>
@@ -185,7 +226,6 @@ export default function FormPesanan({ onTambah, products = [] }) {
 const styles = StyleSheet.create({
   container: { marginVertical: 15 },
   input: {
-    backgroundColor: "#EBF4F6",
     borderWidth: 1,
     padding: 15,
     paddingTop: 10,
@@ -193,14 +233,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   picker: {
-    backgroundColor: "#EBF4F6",
     borderWidth: 1,
     padding: 15,
     marginVertical: 5,
     borderRadius: 8,
   },
   button: {
-    backgroundColor: "#296374",
     padding: 14,
     borderRadius: 12,
     marginTop: 15,
@@ -208,7 +246,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   buttonSmall: {
-    backgroundColor: "#296374",
     padding: 10,
     borderRadius: 12,
     marginTop: 20,
@@ -216,22 +253,18 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   dateField: {
-    backgroundColor: "#EBF4F6",
     borderWidth: 1,
-    borderColor: "#c8dfe4",
     padding: 15,
     marginVertical: 5,
     borderRadius: 8,
   },
   dateLabel: {
     fontSize: 12,
-    color: "#4b6570",
     marginBottom: 4,
   },
   dateValue: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#003049",
   },
   buttonText: {
     color: "#ffff",
