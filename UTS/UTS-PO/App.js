@@ -100,6 +100,18 @@ export default function App() {
     setPesanan((prevPesanan) => [...prevPesanan, dataBaru]);
   };
 
+const editPesanan = (id, dataBaru) => {
+  setPesanan((prevPesanan) =>
+    prevPesanan.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            ...dataBaru,
+          }
+        : item,
+    ),
+  );
+};
   const tambahProduk = (produkBaru) => {
     setProducts((prevProducts) => {
       const namaBaru = produkBaru.name.trim();
@@ -209,13 +221,14 @@ export default function App() {
           }}
         >
           {(props) => (
-            <Pesanan
-              {...props}
-              pesanan={pesanan}
-              tandaiSelesai={tandaiSelesai}
-              hapusPesanan={hapusPesanan}
-            />
-          )}
+<Pesanan
+  {...props}
+  pesanan={pesanan}
+  tandaiSelesai={tandaiSelesai}
+  hapusPesanan={hapusPesanan}
+  editPesanan={editPesanan}
+  products={products}
+/>          )}
         </Tab.Screen>
 
         <Tab.Screen

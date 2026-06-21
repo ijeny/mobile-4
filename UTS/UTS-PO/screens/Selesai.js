@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, SectionList } from "react-native";
 import ItemPesanan from "../components/ItemPesanan";
+import { appColors } from "../theme/colors";
 
 const parseDate = (d) => {
   if (!d) return 0;
@@ -76,7 +77,7 @@ export default function Selesai({ pesanan }) {
 
   return (
     <SectionList
-      style={{ flex: 1 }}
+      style={styles.page}
       contentContainerStyle={styles.container}
       sections={grouped}
       keyExtractor={(item) => item.id}
@@ -106,6 +107,10 @@ export default function Selesai({ pesanan }) {
 }
 
 const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    backgroundColor: appColors.background,
+  },
   container: {
     padding: 20,
   },
@@ -122,39 +127,39 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   badge: {
-    backgroundColor: "#0C2C55",
+    backgroundColor: appColors.primary,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 999,
   },
   badgeText: {
-    color: "#fff",
+    color: appColors.white,
     fontSize: 12,
     fontWeight: "700",
   },
   sectionCount: {
-    color: "#4b6570",
+    color: appColors.secondaryText,
     fontSize: 12,
     fontWeight: "600",
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#0C2C55",
+    color: appColors.primaryText,
   },
   sectionSubtitle: {
     marginTop: 2,
-    color: "#4b6570",
+    color: appColors.secondaryText,
     fontSize: 13,
   },
   sectionDivider: {
     marginTop: 10,
     height: 1,
-    backgroundColor: "#d8e3e8",
+    backgroundColor: appColors.border,
   },
   emptyText: {
     textAlign: "center",
     marginTop: 24,
-    color: "#4b6570",
+    color: appColors.secondaryText,
   },
 });

@@ -95,6 +95,25 @@ const seedOrders = async (db, orders) => {
   }
 };
 
+export const updateOrder = async (orderId, order) => {
+  const db = await getDatabase();
+
+  await db.runAsync(
+    `UPDATE orders
+     SET customer = ?, items = ?, total = ?, date = ?, status = ?, isPO = ?
+     WHERE id = ?`,
+    order.customer,
+    JSON.stringify(order.items || []),
+    order.total || 0,
+    order.date || "Tanpa tanggal",
+    order.status || "Menunggu",
+    order.isPO === false ? 0 : 1,
+    orderId,
+  );
+
+  return { ...order, id: orderId };
+};
+
 export const initializeDatabase = async ({
   legacyProducts = [],
   legacyOrders = [],

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
+import { appColors } from "../theme/colors";
 
 export default function FormPesanan({ onTambah, products = [] }) {
   const [nama, setNama] = useState("");
@@ -110,15 +111,19 @@ export default function FormPesanan({ onTambah, products = [] }) {
       ? (hargaProduk[produk]?.price || 0) * parseInt(jumlah, 10)
       : 0;
 
-  return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Nama Customer"
-        style={styles.input}
-        value={nama}
-        onChangeText={setNama}
-      />
+return (
+  <View style={styles.container}>
+    <Text style={styles.label}>Nama Customer</Text>
+    <TextInput
+      placeholder="Masukkan nama customer"
+      placeholderTextColor={appColors.secondaryText}
+      style={styles.input}
+      value={nama}
+      onChangeText={setNama}
+    />
 
+    <Text style={styles.label}>Pilih Produk</Text>
+    <View style={styles.pickerWrapper}>
       <Picker
         selectedValue={produk}
         style={styles.picker}
@@ -133,108 +138,137 @@ export default function FormPesanan({ onTambah, products = [] }) {
           />
         ))}
       </Picker>
-
-      <TextInput
-        placeholder="Jumlah"
-        style={styles.input}
-        value={jumlah}
-        onChangeText={setJumlah}
-        keyboardType="numeric"
-      />
-
-      <TouchableOpacity style={styles.dateField} onPress={bukaTanggal}>
-        <Text style={styles.dateLabel}>Tanggal ambil pesanan</Text>
-        <Text style={styles.dateValue}>{formatTanggal(tanggal)}</Text>
-      </TouchableOpacity>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={tanggal}
-          mode="date"
-          display={Platform.OS === "android" ? "calendar" : "spinner"}
-          onChange={onChangeTanggal}
-        />
-      )}
-
-      <Text style={{ marginTop: 10, fontWeight: "bold" }}>
-        Subtotal: Rp {subtotal}
-      </Text>
-
-      {items.length > 0 && (
-        <View style={{ marginTop: 8 }}>
-          {items.map((it, i) => (
-            <Text key={i}>
-              {it.produk} x{it.jumlah} - Rp {it.total}
-            </Text>
-          ))}
-        </View>
-      )}
-
-      <Text style={{ marginTop: 10 }}>Item sekarang: Rp {currentTotal}</Text>
-
-      <TouchableOpacity style={styles.buttonSmall} onPress={tambahItem}>
-        <Text style={styles.buttonText}>Tambah Pesanan</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleTambah}>
-        <Text style={styles.buttonText}>Konfirmasi</Text>
-      </TouchableOpacity>
     </View>
-  );
+
+    <Text style={styles.label}>Jumlah</Text>
+    <TextInput
+      placeholder="Masukkan jumlah"
+      placeholderTextColor={appColors.secondaryText}
+      style={styles.input}
+      value={jumlah}
+      onChangeText={setJumlah}
+      keyboardType="numeric"
+    />
+
+    <Text style={styles.label}>Tanggal Ambil Pesanan</Text>
+    <TouchableOpacity style={styles.dateField} onPress={bukaTanggal}>
+      <Text style={styles.dateValue}>{formatTanggal(tanggal)}</Text>
+    </TouchableOpacity>
+
+    {showDatePicker && (
+      <DateTimePicker
+        value={tanggal}
+        mode="date"
+        display={Platform.OS === "android" ? "calendar" : "spinner"}
+        onChange={onChangeTanggal}
+      />
+    )}
+
+    <Text style={styles.subtotalText}>Subtotal: Rp {subtotal}</Text>
+
+    {items.length > 0 && (
+      <View style={styles.itemList}>
+        {items.map((it, i) => (
+          <Text key={i} style={styles.itemText}>
+            {it.produk} x{it.jumlah} - Rp {it.total}
+          </Text>
+        ))}
+      </View>
+    )}
+
+    <Text style={styles.currentItemText}>Item sekarang: Rp {currentTotal}</Text>
+
+    <TouchableOpacity style={styles.buttonSmall} onPress={tambahItem}>
+      <Text style={styles.buttonText}>Tambah Pesanan</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.button} onPress={handleTambah}>
+      <Text style={styles.buttonText}>Konfirmasi</Text>
+    </TouchableOpacity>
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
-  container: { marginVertical: 15 },
+  container: {
+    marginVertical: 15,
+    marginbottom: 30,
+  },
   input: {
-    backgroundColor: "#EBF4F6",
+    backgroundColor: appColors.surface,
     borderWidth: 1,
+    borderColor: appColors.border,
+    color: appColors.primaryText,
     padding: 15,
-    paddingTop: 10,
     marginVertical: 5,
-    borderRadius: 8,
+    borderRadius: 10,
+  },
+  pickerWrapper: {
+    backgroundColor: appColors.surface,
+    borderWidth: 1,
+    borderColor: appColors.border,
+    borderRadius: 10,
+    marginVertical: 5,
+    overflow: "hidden",
   },
   picker: {
-    backgroundColor: "#EBF4F6",
-    borderWidth: 1,
-    padding: 15,
-    marginVertical: 5,
-    borderRadius: 8,
-  },
-  button: {
-    backgroundColor: "#296374",
-    padding: 14,
-    borderRadius: 12,
-    marginTop: 15,
-    alignItems: "center",
-    elevation: 3,
-  },
-  buttonSmall: {
-    backgroundColor: "#296374",
-    padding: 10,
-    borderRadius: 12,
-    marginTop: 20,
-    alignItems: "center",
-    elevation: 3,
+    color: appColors.primaryText,
   },
   dateField: {
-    backgroundColor: "#EBF4F6",
+    backgroundColor: appColors.surface,
     borderWidth: 1,
-    borderColor: "#c8dfe4",
+    borderColor: appColors.border,
     padding: 15,
     marginVertical: 5,
-    borderRadius: 8,
+    borderRadius: 10,
   },
   dateLabel: {
     fontSize: 12,
-    color: "#4b6570",
+    color: appColors.secondaryText,
     marginBottom: 4,
   },
   dateValue: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#003049",
+    color: appColors.primaryText,
+  },
+  subtotalText: {
+    marginTop: 10,
+    fontWeight: "bold",
+    color: appColors.primaryText,
+  },
+  itemList: {
+    marginTop: 8,
+    backgroundColor: appColors.surface,
+    borderWidth: 1,
+    borderColor: appColors.border,
+    borderRadius: 10,
+    padding: 12,
+  },
+  itemText: {
+    color: appColors.primaryText,
+    marginBottom: 4,
+  },
+  currentItemText: {
+    marginTop: 10,
+    color: appColors.secondaryText,
+  },
+  buttonSmall: {
+    backgroundColor: appColors.success,
+    padding: 12,
+    borderRadius: 12,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: appColors.primary,
+    padding: 14,
+    borderRadius: 12,
+    marginTop: 15,
+    alignItems: "center",
   },
   buttonText: {
-    color: "#ffff",
+    color: appColors.white,
     fontWeight: "bold",
   },
 });

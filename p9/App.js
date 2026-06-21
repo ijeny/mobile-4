@@ -25,6 +25,7 @@ import {
   fetchProducts,
   initializeDatabase,
   markOrderAsCompleted,
+  updateOrder,
   updateProduct,
 } from "./lib/database";
 
@@ -183,6 +184,11 @@ useEffect(() => {
     await refreshProducts();
   };
 
+  const editPesanan = async (orderId, dataBaru) => {
+    await updateOrder(orderId, dataBaru);
+    await refreshOrders();
+  };
+
   const deleteProduk = async (productId) => {
     await deleteProduct(productId);
     await refreshProducts();
@@ -292,6 +298,7 @@ useEffect(() => {
               pesanan={pesanan}
               tandaiSelesai={tandaiSelesai}
               hapusPesanan={hapusPesanan}
+              editPesanan={editPesanan}
               themeMode={themeMode}
               colors={colors}
             />

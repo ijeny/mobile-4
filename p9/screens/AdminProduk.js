@@ -20,7 +20,7 @@ export default function AdminProduk({
   const [hargaProduk, setHargaProduk] = useState("");
   const [editingId, setEditingId] = useState(null);
 
-  const handleTambahProduk = () => {
+  const handleTambahProduk = async () => {
     const nama = namaProduk.trim();
     const harga = parseInt(hargaProduk, 10);
 
@@ -53,15 +53,14 @@ export default function AdminProduk({
       return;
     }
 
-    if (editingId) {
-      updateProduk(editingId, { name: nama, price: harga });
+  if (editingId) {
+      await updateProduk(editingId, { name: nama, price: harga });
       setEditingId(null);
       Alert.alert("Berhasil", "Produk sudah diperbarui.");
     } else {
-      tambahProduk({ name: nama, price: harga });
+      await tambahProduk({ name: nama, price: harga });
       Alert.alert("Berhasil", "Produk baru sudah ditambahkan ke dropdown.");
     }
-
     setNamaProduk("");
     setHargaProduk("");
   };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { appColors } from "../theme/colors";
 import {
   View,
   Text,
@@ -155,28 +156,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: appColors.background,
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#003049",
+    color: appColors.primaryText,
   },
   subtitle: {
     marginTop: 8,
     marginBottom: 16,
-    color: "#4b6570",
+    color: appColors.secondaryText,
   },
   input: {
-    backgroundColor: "#EBF4F6",
+    backgroundColor: appColors.surface,
     borderWidth: 1,
-    borderColor: "#c8dfe4",
+    borderColor: appColors.border,
     padding: 14,
     borderRadius: 10,
     marginBottom: 10,
   },
   button: {
-    backgroundColor: "#0C2C55",
+    backgroundColor: appColors.primary,
     padding: 14,
     borderRadius: 12,
     alignItems: "center",
@@ -189,37 +190,37 @@ const styles = StyleSheet.create({
   buttonGhost: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: "#0C2C55",
+    borderColor: appColors.primary,
     padding: 14,
     borderRadius: 12,
     alignItems: "center",
     marginBottom: 18,
   },
   buttonGhostText: {
-    color: "#0C2C55",
+    color: appColors.primary,
     fontWeight: "bold",
   },
   listTitle: {
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "#003049",
+    color: appColors.primaryText,
   },
   card: {
-    backgroundColor: "#f5f7fa",
+    backgroundColor: appColors.surface,
     padding: 14,
     borderRadius: 10,
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#e3e8ef",
+    borderColor: appColors.border,
   },
   cardName: {
     fontWeight: "600",
-    color: "#0C2C55",
+    color: appColors.primaryText,
   },
   cardPrice: {
     marginTop: 4,
-    color: "#296374",
+    color: appColors.success,
   },
   cardActions: {
     flexDirection: "row",
@@ -227,16 +228,16 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   smallButton: {
-    backgroundColor: "#0C2C55",
+    backgroundColor: appColors.primary,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 8,
   },
   deleteButton: {
-    backgroundColor: "#B23B3B",
+    backgroundColor: appColors.danger,
   },
   smallButtonText: {
-    color: "#fff",
+    color: appColors.white,
     fontWeight: "600",
   },
 });
