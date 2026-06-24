@@ -149,10 +149,6 @@ export default function Pesanan({
   };
 
   const handleUbahJumlahItem = (index, jumlahBaru) => {
-    const jumlahAngka = parseInt(jumlahBaru, 10);
-
-    if (Number.isNaN(jumlahAngka) || jumlahAngka <= 0) return;
-
     setEditItems((prev) =>
       prev.map((item, i) => {
         if (i !== index) return item;
@@ -160,9 +156,25 @@ export default function Pesanan({
         const productMatch = products.find((p) => p.name === item.produk);
         const hargaSatuan = productMatch ? productMatch.price : 0;
 
+        // kalau input dikosongkan, biarkan kosong dulu
+        if (jumlahBaru === "") {
+          return {
+            ...item,
+            jumlah: "",
+            total: 0,
+          };
+        }
+
+        const jumlahAngka = parseInt(jumlahBaru, 10);
+
+        // kalau bukan angka valid, jangan ubah state item lain
+        if (Number.isNaN(jumlahAngka) || jumlahAngka < 0) {
+          return item;
+        }
+
         return {
           ...item,
-          jumlah: jumlahAngka,
+          jumlah: jumlahBaru, // simpan sebagai string dulu
           total: hargaSatuan * jumlahAngka,
         };
       }),
@@ -182,7 +194,12 @@ export default function Pesanan({
       return;
     }
 
-    const totalBaru = editItems.reduce(
+    const itemsFinal = editItems.map((item) => ({
+      ...item,
+      jumlah: parseInt(item.jumlah, 10) || 0,
+    }));
+
+    const totalBaru = itemsFinal.reduce(
       (sum, item) => sum + (item.total || 0),
       0,
     );
@@ -190,7 +207,7 @@ export default function Pesanan({
     editPesanan(selectedOrder.id, {
       customer: editNama.trim(),
       date: formatTanggal(editTanggal),
-      items: editItems,
+      items: itemsFinal,
       total: totalBaru,
     });
 
@@ -313,10 +330,7 @@ export default function Pesanan({
               )}
 
               <Text
-                style={[
-                  styles.label,
-                  { marginTop: 16, color: colors.text },
-                ]}
+                style={[styles.label, { marginTop: 16, color: colors.text }]}
               >
                 Tambah Produk ke Pesanan
               </Text>
@@ -373,10 +387,7 @@ export default function Pesanan({
               </TouchableOpacity>
 
               <Text
-                style={[
-                  styles.label,
-                  { marginTop: 18, color: colors.text },
-                ]}
+                style={[styles.label, { marginTop: 18, color: colors.text }]}
               >
                 Daftar Item Pesanan
               </Text>
