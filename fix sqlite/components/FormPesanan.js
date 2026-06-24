@@ -6,6 +6,8 @@ import {
   Text,
   StyleSheet,
   Platform,
+  ScrollView,
+  KeyboardAvoidingView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
@@ -116,124 +118,139 @@ export default function FormPesanan({
       : 0;
 
   return (
-    <View style={styles.container}>
-      <Text style={[styles.label, { color: colors.text }]}>Nama Customer</Text>
-    <TextInput
-      placeholder="Masukkan nama customer"
-      placeholderTextColor={colors.muted}
-      style={[
-        styles.input,
-        {
-          backgroundColor: colors.surface,
-          borderColor: colors.border,
-          color: colors.text,
-        },
-      ]}
-      value={nama}
-      onChangeText={setNama}
-    />
-
-    <Text style={[styles.label, { color: colors.text }]}>Pilih Produk</Text>
-    <View
-      style={[
-        styles.pickerWrapper,
-        { backgroundColor: colors.surface, borderColor: colors.border },
-      ]}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      <Picker
-        selectedValue={produk}
-        style={[styles.picker, { color: colors.text }]}
-        onValueChange={setProduk}
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-        <Picker.Item label="Pilih Produk" value="" />
-        {products.map((item) => (
-          <Picker.Item
-            key={item.id}
-            label={`${item.name} - Rp ${item.price}`}
-            value={item.id}
-          />
-        ))}
-      </Picker>
-    </View>
-
-    <Text style={[styles.label, { color: colors.text }]}>Jumlah</Text>
-    <TextInput
-      placeholder="Masukkan jumlah"
-      placeholderTextColor={colors.muted}
-      style={[
-        styles.input,
-        {
-          backgroundColor: colors.surface,
-          borderColor: colors.border,
-          color: colors.text,
-        },
-      ]}
-      value={jumlah}
-      onChangeText={setJumlah}
-      keyboardType="numeric"
-    />
-
-    <Text style={[styles.label, { color: colors.text }]}>
-      Tanggal Ambil Pesanan
-    </Text>
-    <TouchableOpacity
-      style={[
-        styles.dateField,
-        { backgroundColor: colors.surface, borderColor: colors.border },
-      ]}
-      onPress={bukaTanggal}
-    >
-      <Text style={[styles.dateValue, { color: colors.text }]}>
-        {formatTanggal(tanggal)}
-      </Text>
-    </TouchableOpacity>
-
-    {showDatePicker && (
-      <DateTimePicker
-        value={tanggal}
-        mode="date"
-        display={Platform.OS === "android" ? "calendar" : "spinner"}
-        onChange={onChangeTanggal}
-      />
-    )}
-
-    <Text style={[styles.subtotalText, { color: colors.text }]}>
-      Subtotal: Rp {subtotal}
-    </Text>
-
-    {items.length > 0 && (
-      <View
-        style={[
-          styles.itemList,
-          { backgroundColor: colors.surface, borderColor: colors.border },
-        ]}
-      >
-        {items.map((it, i) => (
-          <Text key={i} style={[styles.itemText, { color: colors.text }]}>
-            {it.produk} x{it.jumlah} - Rp {it.total}
+        <View style={styles.container}>
+          <Text style={[styles.label, { color: colors.text }]}>
+            Nama Customer
           </Text>
-        ))}
-      </View>
-    )}
+          <TextInput
+            placeholder="Masukkan nama customer"
+            placeholderTextColor={colors.muted}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.surface,
+                borderColor: colors.border,
+                color: colors.text,
+              },
+            ]}
+            value={nama}
+            onChangeText={setNama}
+          />
 
-    <Text style={[styles.currentItemText, { color: colors.muted }]}>
-      Item sekarang: Rp {currentTotal}
-    </Text>
+          <Text style={[styles.label, { color: colors.text }]}>
+            Pilih Produk
+          </Text>
+          <View
+            style={[
+              styles.pickerWrapper,
+              { backgroundColor: colors.surface, borderColor: colors.border },
+            ]}
+          >
+            <Picker
+              selectedValue={produk}
+              style={[styles.picker, { color: colors.text }]}
+              onValueChange={setProduk}
+            >
+              <Picker.Item label="Pilih Produk" value="" />
+              {products.map((item) => (
+                <Picker.Item
+                  key={item.id}
+                  label={`${item.name} - Rp ${item.price}`}
+                  value={item.id}
+                />
+              ))}
+            </Picker>
+          </View>
 
-    <TouchableOpacity
-      style={[styles.buttonSmall, { backgroundColor: colors.success }]}
-      onPress={tambahItem}
-    >
-      <Text style={styles.buttonText}>Tambah Pesanan</Text>
-    </TouchableOpacity>
+          <Text style={[styles.label, { color: colors.text }]}>Jumlah</Text>
+          <TextInput
+            placeholder="Masukkan jumlah"
+            placeholderTextColor={colors.muted}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.surface,
+                borderColor: colors.border,
+                color: colors.text,
+              },
+            ]}
+            value={jumlah}
+            onChangeText={setJumlah}
+            keyboardType="numeric"
+          />
 
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: colors.primary }]}
-      onPress={handleTambah}
-    >
-      <Text style={styles.buttonText}>Konfirmasi</Text>
-    </TouchableOpacity>
-  </View>
+          <Text style={[styles.label, { color: colors.text }]}>
+            Tanggal Ambil Pesanan
+          </Text>
+          <TouchableOpacity
+            style={[
+              styles.dateField,
+              { backgroundColor: colors.surface, borderColor: colors.border },
+            ]}
+            onPress={bukaTanggal}
+          >
+            <Text style={[styles.dateValue, { color: colors.text }]}>
+              {formatTanggal(tanggal)}
+            </Text>
+          </TouchableOpacity>
+
+          {showDatePicker && (
+            <DateTimePicker
+              value={tanggal}
+              mode="date"
+              display={Platform.OS === "android" ? "calendar" : "spinner"}
+              onChange={onChangeTanggal}
+            />
+          )}
+
+          <Text style={[styles.subtotalText, { color: colors.text }]}>
+            Subtotal: Rp {subtotal}
+          </Text>
+
+          {items.length > 0 && (
+            <View
+              style={[
+                styles.itemList,
+                { backgroundColor: colors.surface, borderColor: colors.border },
+              ]}
+            >
+              {items.map((it, i) => (
+                <Text key={i} style={[styles.itemText, { color: colors.text }]}>
+                  {it.produk} x{it.jumlah} - Rp {it.total}
+                </Text>
+              ))}
+            </View>
+          )}
+
+          <Text style={[styles.currentItemText, { color: colors.muted }]}>
+            Item sekarang: Rp {currentTotal}
+          </Text>
+
+          <TouchableOpacity
+            style={[styles.buttonSmall, { backgroundColor: colors.success }]}
+            onPress={tambahItem}
+          >
+            <Text style={styles.buttonText}>Tambah Pesanan</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: colors.primary }]}
+            onPress={handleTambah}
+          >
+            <Text style={styles.buttonText}>Konfirmasi</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -305,5 +322,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: appColors.white,
     fontWeight: "bold",
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 40,
   },
 });
