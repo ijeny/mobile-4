@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Toko Mori J",
-    "slug": "Toko Mori J",
+    "name": "Toko-Mori-J",
+    "slug": "Toko-Mori-J",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": false
+      "edgeToEdgeEnabled": false,
+      "package": "com.ijeny.TokoMoriJ"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -28,6 +29,11 @@
     "plugins": [
       "@react-native-community/datetimepicker",
       "expo-sqlite"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c694cfba-f41e-40fb-8216-10b277e8d47f"
+      }
+    }
   }
 }
